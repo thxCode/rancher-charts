@@ -1,0 +1,23 @@
+{{- if .Values.enabledRBAC }}
+apiVersion: {{ template "rbac_api_version" . }}
+kind: RoleBinding
+metadata:
+  annotations:
+    helm.sh/hook: post-delete
+    helm.sh/hook-weight: "-5"
+    helm.sh/hook-delete-policy: hook-succeeded
+  labels:
+    app: {{ template "app.name" . }}
+    chart: {{ template "app.version" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "app.cleanup.fullname" . }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ template "app.cleanup.fullname" . }}
+subjects:
+  - kind: ServiceAccount
+    name: {{ template "app.cleanup.fullname" . }}
+    namespace: {{ .Release.Namespace }}
+{{- end }}

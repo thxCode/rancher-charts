@@ -1,0 +1,35 @@
+{{- if .Values.enabledRBAC }}
+apiVersion: {{ template "rbac_api_version" . }}
+kind: ClusterRole
+metadata:
+  labels:
+    app: {{ template "app.name" . }}
+    chart: {{ template "app.version" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "app.fullname" . }}
+rules:
+- nonResourceURLs: 
+  - "/metrics"
+  verbs:
+  - "get"
+- apiGroups: 
+  - ""
+  verbs: 
+  - "get"
+  - "list"
+  - "watch"
+  resources:
+  - services
+  - endpoints
+  - pods
+{{- if .Values.useAsClusterLevel }}
+  - nodes
+- apiGroups:
+  - ""
+  resources:
+  - nodes/metrics
+  verbs:
+  - "get"
+{{- end }}
+{{- end }}

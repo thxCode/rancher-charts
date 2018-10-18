@@ -1,0 +1,251 @@
+categories:
+- Monitoring
+
+questions:
+
+- variable: enabled
+  default: false
+  description: "Use Prometheus Operator or not"
+  type: boolean
+  required: true
+  label: Prometheus Operator Enabled
+  group: "Operator Settings"
+  show_subquestion_if: true
+  subquestions:
+  - variable: nameOverride
+    default: "prometheus-operator"
+    description: ""
+    type: string
+    label: Name Override By
+
+- variable: prometheus.enabled
+  default: false
+  description: "Use Prometheus or not"
+  type: boolean
+  required: true
+  label: Prometheus Enabled
+  group: "Prometheus Settings"
+- variable: prometheus.persistence.enabled
+  default: false
+  description: "Enable persistent volume for Prometheus"
+  type: boolean
+  required: true
+  label: Prometheus Persistent Volume Enabled
+  group: "Prometheus Settings"
+  show_if: "prometheus.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: prometheus.persistence.size
+    default: "10Gi"
+    description: "Prometheus Persistent Volume Size"
+    type: string
+    label: Prometheus Volume Size
+  - variable: prometheus.persistence.storageClass
+    default: ""
+    description: "If undefined or null, uses the default StorageClass. Default to null"
+    type: storageclass
+    label: Default StorageClass for Prometheus
+
+- variable: exporter-coredns.enabled
+  default: false
+  description: ""
+  type: boolean
+  label: Expose CoreDNS Metrics
+  group: "CoreDNS Exporter Settings"
+  show_if: "prometheus.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: exporter-coredns.ports.metrics.port
+    default: "9153"
+    description: ""
+    type: int
+    label: Endpoint Port
+    group: "CoreDNS Exporter Settings"
+
+- variable: exporter-kube-controller-manager.enabled
+  default: false
+  description: ""
+  type: boolean
+  label: Expose Controller Manager Metrics
+  group: "Controller Manager Exporter Settings"
+  show_if: "prometheus.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: exporter-kube-controller-manager.ports.metrics.port
+    default: "10252"
+    description: ""
+    type: int
+    label: Endpoint Port
+    group: "Controller Manager Exporter Settings"
+
+- variable: exporter-kube-dns.enabled
+  default: false
+  description: ""
+  type: boolean
+  label: Expose Kube DNS Metrics
+  group: "Kube DNS Exporter Settings"
+  show_if: "prometheus.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: exporter-kube-dns.ports.metrics.dnsmasq.port
+    default: "10054"
+    description: ""
+    type: int
+    label: DNSMasq Endpoint Port
+    group: "Kube DNS Exporter Settings"
+  - variable: exporter-kube-dns.ports.metrics.skydns.port
+    default: "10055"
+    description: ""
+    type: int
+    label: SkyDNS Endpoint Port
+    group: "Kube DNS Exporter Settings"
+
+- variable: exporter-kube-etcd.enabled
+  default: false
+  description: ""
+  type: boolean
+  label: Expose Kube Etcd Metrics
+  group: "Kube Etcd Exporter Settings"
+  show_if: "prometheus.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: exporter-kube-etcd.ports.metrics.port
+    default: "4001"
+    description: ""
+    type: int
+    label: Endpoint Port
+    group: "Kube Etcd Exporter Settings"
+  - variable: exporter-kube-etcd.ports.metrics.schema
+    default: "https"
+    description: ""
+    type: enum
+    options:
+    - "https"
+    - "http"
+    label: Endpoint Schema
+    group: "Kube Etcd Exporter Settings"
+
+- variable: exporter-kube-scheduler.enabled
+  default: false
+  description: ""
+  type: boolean
+  label: Expose Scheduler Metrics
+  group: "Kube Scheduler Exporter Settings"
+  show_if: "prometheus.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: exporter-kube-scheduler.ports.metrics.port
+    default: "10251"
+    description: ""
+    type: int
+    label: Endpoint Port
+    group: "Kube Scheduler Exporter Settings"
+
+- variable: exporter-kube-state.enabled
+  default: false
+  description: ""
+  type: boolean
+  label: Expose Kube State Metrics
+  group: "Kube State Exporter Settings"
+  show_if: "prometheus.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: exporter-kube-state.ports.metrics.port
+    default: "8080"
+    description: ""
+    type: int
+    label: Endpoint Port
+    group: "Kube State Exporter Settings"
+
+- variable: exporter-kubelets.enabled
+  default: false
+  description: ""
+  type: boolean
+  label: Expose Kubelets Metrics
+  group: "Kubelets Exporter Settings"
+  show_if: "prometheus.enabled=true"
+
+- variable: exporter-kubernetes.enabled
+  default: false
+  description: ""
+  type: boolean
+  label: Expose Kubernetes Metrics
+  group: "Kubernetes Exporter Settings"
+  show_if: "prometheus.enabled=true"
+
+- variable: exporter-node.enabled
+  default: false
+  description: ""
+  type: boolean
+  label: Expose Node Metrics
+  group: "Node Exporter Settings"
+  show_if: "prometheus.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: exporter-node.ports.metrics.port
+    default: "9100"
+    description: "Also expose as host port"
+    type: int
+    label: Endpoint Port
+    group: "Node Exporter Settings"
+
+- variable: alertmanager.enabled
+  default: false
+  description: "Use Alertmanager or not"
+  type: boolean
+  required: true
+  label: Alertmanager Enabled
+  group: "Alertmanager Settings"
+- variable: alertmanager.persistence.enabled
+  default: false
+  description: "Enable persistent volume for Alertmanager"
+  type: boolean
+  required: true
+  label: Alertmanager Persistent Volume Enabled
+  group: "Alertmanager Settings"
+  show_subquestion_if: true
+  show_if: "alertmanager.enabled=true"
+  subquestions:
+  - variable: alertmanager.persistence.size
+    default: "10Gi"
+    description: "Alertmanager Persistent Volume Size"
+    type: string
+    label: Alertmanager Volume Size
+  - variable: alertmanager.persistence.storageClass
+    default: ""
+    description: "If undefined or null, uses the default StorageClass. Default to null"
+    type: storageclass
+    label: Default StorageClass for Alertmanager
+
+- variable: grafana.enabled
+  default: false
+  description: "Use Grafana or not"
+  type: boolean
+  required: true
+  label: Grafana Enabled
+  group: "Grafana Settings"
+  show_if: "prometheus.enabled=true"
+  show_subquestion_if: true
+- variable: grafana.persistence.enabled
+  default: "false"
+  description: "Enable persistent volume for Grafana"
+  type: boolean
+  required: true
+  label: Grafana Persistent Volume Enabled
+  group: "Grafana Settings"
+  show_if: "grafana.enabled=true"
+  show_subquestion_if: true
+  subquestions:
+  - variable: grafana.persistence.size
+    default: "10Gi"
+    description: "Grafana Persistent Volume Size"
+    type: string
+    label: Grafana Volume Size
+  - variable: grafana.persistence.storageClass
+    default: ""
+    description: "If undefined or null, uses the default StorageClass. Default to null"
+    type: storageclass
+    label: Default StorageClass for Grafana
+
+
+

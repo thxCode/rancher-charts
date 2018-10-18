@@ -1,0 +1,27 @@
+{{- if .Values.enabledRBAC }}
+apiVersion: {{ template "rbac_api_version" . }}
+kind: Role
+metadata:
+  labels:
+    app: {{ template "app.name" . }}
+    chart: {{ template "app.version" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "app.fullname" . }}
+rules:
+- apiGroups: 
+    - ""
+  resources: 
+    - "pods"
+  verbs: 
+    - "get"
+- apiGroups: 
+    - "extensions"
+  resources: 
+    - "deployments"
+  resourceNames: 
+    - {{ template "app.fullname" . }}
+  verbs: 
+    - "get"
+    - "update"
+{{- end }}

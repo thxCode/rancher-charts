@@ -1,0 +1,62 @@
+{{- if .Values.enabledRBAC }}
+apiVersion: {{ template "rbac_api_version" . }}
+kind: ClusterRole
+metadata:
+  labels:
+    app: {{ template "app.name" . }}
+    chart: {{ template "app.version" . }}
+    heritage: {{ .Release.Service }}
+    release: {{ .Release.Name }}
+  name: {{ template "app.fullname" . }}
+rules:
+- apiGroups: 
+  - ""
+  resources:
+  - namespaces
+  - nodes
+  - pods
+  - services
+  - resourcequotas
+  - replicationcontrollers
+  - limitranges
+  - persistentvolumeclaims
+  - persistentvolumes
+  - endpoints
+  - configmaps
+  - secrets
+  verbs: 
+  - "list"
+  - "watch"
+- apiGroups: 
+  - "extensions"
+  resources:
+  - daemonsets
+  - deployments
+  - replicasets
+  verbs: 
+  - "list"
+  - "watch"
+- apiGroups: 
+  - "apps"
+  resources:
+  - statefulsets
+  - deployments
+  verbs: 
+  - "list"
+  - "watch"
+- apiGroups: 
+  - "batch"
+  resources:
+  - cronjobs
+  - jobs
+  verbs: 
+  - "list"
+  - "watch"
+- apiGroups: 
+  - "autoscaling"
+  resources:
+  - horizontalpodautoscalers
+  verbs: 
+  - "list"
+  - "watch"
+{{- end }}
