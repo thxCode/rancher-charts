@@ -56,7 +56,7 @@ spec:
 {{ toYaml .Values.secrets | indent 4 }}
 {{- end }}
 {{- if .Values.enabledRBAC }}
-  serviceAccountName: {{ template "app.serviceaccount.name" . }}
+  serviceAccountName: {{ .Values.serviceAccountName }}
 {{- end }}
 {{- if .Values.serviceMonitorNamespaceSelector }}
   serviceMonitorNamespaceSelector:
@@ -122,12 +122,12 @@ spec:
 {{- end }}
   imagePullSecrets: 
 {{ toYaml .Values.image.pullSecrets | indent 4 }}
-{{- if .Values.additionalScrapeConfigs }}
+{{- if and .Values.additionalScrapeConfigsEnabled .Values.additionalScrapeConfigs  }}
   additionalScrapeConfigs:
     name: {{ template "app.fullname" . }}-additional-scrape-configs
     key: additional-scrape-configs.yaml
 {{- end }}
-{{- if .Values.additionalAlertManagerConfigs }}
+{{- if and .Values.additionalAlertManagerConfigsEnabled .Values.additionalAlertManagerConfigs }}
   additionalAlertManagerConfigs:
     name: {{ template "app.fullname" . }}-additional-alertmanager-configs
     key: additional-alertmanager-configs.yaml

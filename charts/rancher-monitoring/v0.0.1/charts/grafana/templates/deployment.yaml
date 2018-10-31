@@ -115,7 +115,7 @@ spec:
     {{ toYaml .Values.nodeSelector | indent 4 }}
     {{- end }}
     {{- if .Values.enabeldRBAC }}
-      serviceAccountName: {{ template "app.fullname" . }}
+      serviceAccountName: {{ .Values.serviceAccountName }}
     {{- end }}
     {{- if .Values.tolerations }}
       tolerations:
@@ -123,7 +123,7 @@ spec:
     {{- end }}
       volumes:
       - name: grafana-storage
-        {{- if .Values.storageSpec }}
+        {{- if or .Values.storageSpec .Values.persistence.enabled }}
         persistentVolumeClaim:
           claimName: {{ template "app.fullname" . }}
         {{- else }}

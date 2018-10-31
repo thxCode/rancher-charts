@@ -1,6 +1,8 @@
 enabledRBAC: true
 
-enabledPSP: true
+## Already exist ServiceAccount
+##
+serviceAccountName: ""
 
 ## CRD apiGroup
 ##
@@ -17,8 +19,6 @@ ports:
 replicaCount: 1
 
 image:
-  # Reference to one or more secrets to be used when pulling images
-  pullSecrets: []
   repository: quay.io/prometheus/node-exporter
   tag: v0.16.0
 

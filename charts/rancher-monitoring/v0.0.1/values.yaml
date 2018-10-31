@@ -4,8 +4,6 @@ nameOverride: "prometheus-operator"
 
 enabledRBAC: true
 
-enabledPSP: true
-
 ## CRD apiGroup
 ##
 apiGroup: "monitoring.coreos.com"
@@ -27,11 +25,6 @@ image:
   configmapReload:
     repository: quay.io/coreos/configmap-reload
     tag: v0.0.1
-  ## Hyperkube image to use when cleaning up
-  ##
-  hyperkube:
-    repository: quay.io/coreos/hyperkube
-    tag: v1.10.5_coreos.0
 
 ## Node labels for prometheus-operator pod assignment
 ##
@@ -79,14 +72,8 @@ alertmanager:
   image:
     repository: quay.io/prometheus/alertmanager
     tag: v0.15.2
-    ## Hyperkube image to use when cleaning up
-    ##
-    hyperkube:
-      repository: quay.io/coreos/hyperkube
-      tag: v1.10.5_coreos.0
   nodeSelector:
     beta.kubernetes.io/os: linux
-  serviceAccountName: ""
   config:
     global:
       resolve_timeout: 5m
@@ -107,6 +94,9 @@ alertmanager:
     storageClass: ""
     accessMode: "ReadWriteOnce"
     size: 50Gi
+  ## Already exist ServiceAccount
+  ##
+  serviceAccountName: ""
 
 exporter-coredns:
   enabled: false
@@ -164,11 +154,11 @@ exporter-kube-state:
   image:
     repository: quay.io/coreos/kube-state-metrics
     tag: v1.4.0
-    addon_resizer:
-      repository: quay.io/coreos/addon-resizer
-      tag: 1.8.1
   nodeSelector:
     beta.kubernetes.io/os: linux
+  ## Already exist ServiceAccount
+  ##
+  serviceAccountName: ""
 
 exporter-kubelets:
   enabled: false
@@ -189,6 +179,9 @@ exporter-node:
   ports: 
     metrics:
       port: 9100
+  ## Already exist ServiceAccount
+  ##
+  serviceAccountName: ""
 
 grafana:
   enabled: false
@@ -205,19 +198,20 @@ grafana:
     size: 50Gi
   adminUser: "admin"
   adminPassword: "admin"
+  ## Already exist ServiceAccount
+  ##
+  serviceAccountName: ""
   prometheusDatasourceURL: "http://prometheus-operated:9090"
 
 prometheus:
   enabled: false
   apiGroup: "monitoring.coreos.com"
   image:
+    ## Reference to one or more secrets to be used when pulling images
+    ##
+    pullSecrets: []
     repository: quay.io/prometheus/prometheus
     tag: v2.4.3
-    ## Hyperkube image to use when cleaning up
-    ##
-    hyperkube:
-      repository: quay.io/coreos/hyperkube
-      tag: v1.10.5_coreos.0
   nodeSelector:
     beta.kubernetes.io/os: linux
   persistence:
@@ -227,6 +221,8 @@ prometheus:
     size: 50Gi
   alertingEndpoints: []
   secrets: []
+  ## Already exist ServiceAccount
+  ##
   serviceAccountName: ""
   serviceMonitorsSelector:
     matchExpressions:
@@ -246,6 +242,7 @@ prometheus:
       - grafana
       - prometheus
       - prometheus-operator
+  additionalScrapeConfigsEnabled: true
   additionalScrapeConfigs:
   - job_name: 'ingress-nginx-endpoints'
     kubernetes_sd_configs:

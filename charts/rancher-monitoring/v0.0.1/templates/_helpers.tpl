@@ -1,5 +1,20 @@
 {{/* vim: set filetype=mustache: */}}
 
+{{- define "charts.exporter-kubelets.fullname" -}}
+{{- printf "exporter-kubelets-%s" .Release.Name -}}
+{{- end -}}
+
+
+{{- define "charts.exporter-kubelets.dnsname" -}}
+{{- include "charts.exporter-kubelets.fullname" . | trunc 63 | trimSuffix "-" -}}
+{{- end -}}
+
+
+{{- define "charts.prometheus.serviceaccount.fullname" -}}
+{{- printf "prometheus-%s" .Release.Name -}}
+{{- end -}}
+
+
 {{- define "app.name" -}}
 {{- default .Chart.Name .Values.nameOverride -}}
 {{- end -}}
@@ -44,21 +59,6 @@
 {{- define "app.cleanup.fullname" -}}
 {{- $name := include "app.name" . -}}
 {{- printf "%s-%s-cleanup" $name .Release.Name -}}
-{{- end -}}
-
-
-{{- define "charts.exporter-kubelets.fullname" -}}
-{{- printf "exporter-kubelets-%s" .Release.Name -}}
-{{- end -}}
-
-
-{{- define "charts.exporter-kubelets.dnsname" -}}
-{{- include "charts.exporter-kubelets.fullname" . | trunc 63 | trimSuffix "-" -}}
-{{- end -}}
-
-
-{{- define "charts.prometheus.serviceaccount.fullname" -}}
-{{- printf "prometheus-%s" .Release.Name -}}
 {{- end -}}
 
 
@@ -121,24 +121,4 @@
 {{- else -}}
 {{- "rbac.authorization.k8s.io/v1alpha1" -}}
 {{- end -}}
-{{- end -}}
-
-
-{{- define "psp_api_version" -}}
-{{- if .Capabilities.APIVersions.Has "policy/v1beta1" -}}
-{{- $kubeVersion := include "kube_version" . -}}
-{{- if hasPrefix "1.9" $kubeVersion -}}
-{{- "extensions/v1beta1" -}}
-{{- else -}}
-{{- "policy/v1beta1" -}}
-{{- end }}
-{{- else -}}
-{{- "extensions/v1beta1" -}}
-{{- end -}}
-{{- end -}}
-
-
-{{- define "psp_api_group" -}}
-{{- $apiVersion := include "psp_api_version" . -}}
-{{- index (regexSplit "/" $apiVersion 2) 0 | printf "%s" -}}
 {{- end -}}

@@ -1,6 +1,8 @@
 enabledRBAC: true
 
-enabledPSP: true
+## Already exist ServiceAccount
+##
+serviceAccountName: ""
 
 ## CRD apiGroup
 ##
@@ -18,18 +20,8 @@ ports:
 replicaCount: 1
 
 image:
-  # Reference to one or more secrets to be used when pulling images
-  pullSecrets: []
   repository: quay.io/coreos/kube-state-metrics
   tag: v1.4.0
-  addon_resizer:
-    repository: quay.io/coreos/addon-resizer
-    tag: 1.8.1
-
-memory: 130Mi
-extra_memory: 2Mi
-cpu: 100m
-extra_cpu: 1m
 
 ## Node Selector to constrain pods to run on particular nodes
 ## Ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/

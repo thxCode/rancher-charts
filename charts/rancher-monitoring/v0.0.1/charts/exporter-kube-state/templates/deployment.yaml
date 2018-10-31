@@ -9,11 +9,6 @@ metadata:
     release: {{ .Release.Name }}
 spec:
   replicas: {{ .Values.replicaCount }}
-  revisionHistoryLimit: 10
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0
   selector:
     matchLabels:
       app: {{ template "app.name" . }}
@@ -31,7 +26,7 @@ spec:
 {{ toYaml .Values.nodeSelector | indent 8 }}
     {{- end }}
       containers:
-      - name: {{ .Chart.Name }}
+      - name: kube-state
         image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
         ports:
         - name: http
@@ -49,43 +44,15 @@ spec:
             port: 8080
           initialDelaySeconds: 30
           timeoutSeconds: 5
-      - name: kube-state-addon-resizer
-        image: "{{ .Values.image.addon_resizer.repository }}:{{ .Values.image.addon_resizer.tag }}"
-        env:
-          - name: MY_POD_NAME
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.name
-          - name: MY_POD_NAMESPACE
-            valueFrom:
-              fieldRef:
-                fieldPath: metadata.namespace
-        volumeMounts:
-        - name: kube-state-config-volume
-          mountPath: /etc/config
-        command:
-          - /pod_nanny
-          - --config-dir=/etc/config
-          - --container={{ .Chart.Name }}
-          - --cpu={{ .Values.cpu }}
-          - --extra-cpu={{ .Values.extra_cpu }}
-          - --memory={{ .Values.memory }}
-          - --extra-memory={{ .Values.extra_memory }}
-          - --threshold=5
-          - --deployment={{ template "app.fullname" . }}
         resources:
           limits:
             cpu: 100m
-            memory: 30Mi
+            memory: 200Mi
           requests:
             cpu: 100m
-            memory: 30Mi
-      volumes:
-      - name: kube-state-config-volume
-        configMap:
-          name: {{ template "app.fullname" . }}
+            memory: 130Mi
     {{- if .Values.enabledRBAC }}
-      serviceAccountName: {{ template "app.fullname" . }}
+      serviceAccountName: {{ .Values.serviceAccountName }}
     {{- end }}
 {{- if .Values.tolerations }}
       tolerations:

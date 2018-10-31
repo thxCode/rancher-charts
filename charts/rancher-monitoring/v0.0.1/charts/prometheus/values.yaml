@@ -1,8 +1,8 @@
 enabledRBAC: true
 
-useAsClusterLevel: true
-
-enabledPSP: true
+## Already exist ServiceAccount
+##
+serviceAccountName: ""
 
 ## CRD apiGroup
 ##
@@ -37,7 +37,8 @@ additionalRulesLabels: {}
 ## Prometheus container image
 ##
 image:
-  # Reference to one or more secrets to be used when pulling images
+  ## Reference to one or more secrets to be used when pulling images
+  ##
   pullSecrets: []
   repository: quay.io/prometheus/prometheus
   tag: v2.4.3
@@ -138,10 +139,6 @@ serviceMonitorsSelector: {}
 
 logLevel: "info"
 
-## Already exist ServiceAccount
-##
-serviceAccountName: ""
-
 ## Prometheus StorageSpec for persistent data
 ## Ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/storage.md
 ##
@@ -164,6 +161,7 @@ persistence: {}
 ## Prometheus AdditionalScrapeConfigs
 ## Ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
 ##
+additionalScrapeConfigsEnabled: false
 additionalScrapeConfigs: []
 # - job_name: "prometheus"
 #   static_configs:
@@ -173,6 +171,7 @@ additionalScrapeConfigs: []
 ## Prometheus AdditionalAlertManagerConfigs
 ## Ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/api.md#prometheusspec
 ##
+additionalAlertManagerConfigsEnabled: false
 additionalAlertManagerConfigs: {}
 # static_configs:
 # - targets:

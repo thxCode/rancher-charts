@@ -1,6 +1,8 @@
 enabledRBAC: true
 
-enabledPSP: true
+## Already exist ServiceAccount
+##
+serviceAccountName: ""
 
 ## CRD apiGroup
 ##
@@ -69,8 +71,6 @@ serviceMonitor:
 ## Alertmanager container image
 ##
 image:
-  # Reference to one or more secrets to be used when pulling images
-  pullSecrets: []
   repository: quay.io/prometheus/alertmanager
   tag: v0.15.2
   ## Hyperkube image to use when cleaning up
@@ -168,10 +168,6 @@ service:
   type: ClusterIP
 
 logLevel: "info"
-
-## Already exist ServiceAccount, must be as same as Prometheus
-##
-serviceAccountName: ""
 
 ## Alertmanager StorageSpec for persistent data
 ## Ref: https://github.com/coreos/prometheus-operator/blob/master/Documentation/user-guides/storage.md

@@ -41,7 +41,7 @@ spec:
 {{ toYaml .Values.secrets | indent 4 }}
 {{- end }}
 {{- if .Values.enabledRBAC }}
-  serviceAccountName: {{ template "app.serviceaccount.name" . }}
+  serviceAccountName: {{ .Values.serviceAccountName }}
 {{- end }}
 {{- if or .Values.storageSpec .Values.persistence.enabled }}
   storage:

@@ -1,5 +1,9 @@
 enabledRBAC: true
 
+## Already exist ServiceAccount
+##
+serviceAccountName: ""
+
 enabledPSP: true
 
 ## CRD apiGroup
@@ -40,8 +44,6 @@ adminPassword: "admin"
 ## Grafana Docker image
 ##
 image:
-  # Reference to one or more secrets to be used when pulling images
-  pullSecrets: []
   repository: grafana/grafana
   tag: 5.3.0
 
