@@ -10,7 +10,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="reading"}
+  expression: sum(nginx_connections{state="reading"})
   legendFormat: Reading connections
   description: ingresscontroller nginx connection reading
 ---
@@ -26,7 +26,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="reading"}
+  expression: sum(nginx_connections{state="reading"}) by (instance)
   legendFormat: Reading connections
   description: ingresscontroller nginx connection reading
 ---
@@ -42,7 +42,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="waiting"}
+  expression: sum(nginx_connections{state="waiting"})
   legendFormat: Nginx waiting connection
   description: ingresscontroller nginx connection waiting
 ---
@@ -58,7 +58,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="waiting"}
+  expression: sum(nginx_connections{state="waiting"}) by (instance)
   legendFormat: Nginx waiting connection
   description: ingresscontroller nginx connection waiting
 ---
@@ -74,7 +74,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="writing"}
+  expression: sum(nginx_connections{state="writing"})
   legendFormat: Writing connections
   description: ingresscontroller nginx connection writing
 ---
@@ -90,7 +90,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="writing"}
+  expression: sum(nginx_connections{state="writing"}) by (instance)
   legendFormat: Writing connections
   description: ingresscontroller nginx connection writing
 ---
@@ -106,7 +106,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="accepted"}
+  expression: sum(nginx_connections{state="accepted"})
   legendFormat: Accepted connections
   description: ingresscontroller nginx connection accepted
 ---
@@ -122,7 +122,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="accepted"}
+  expression: sum(nginx_connections{state="accepted"}) by (instance)
   legendFormat: Accepted connections
   description: ingresscontroller nginx connection accepted
 ---
@@ -138,7 +138,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="active"}
+  expression: sum(nginx_connections{state="active"})
   legendFormat: Active connections
   description: ingresscontroller nginx connection active
 ---
@@ -154,7 +154,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="active"}
+  expression: sum(nginx_connections{state="active"}) by (instance)
   legendFormat: Active connections
   description: ingresscontroller nginx connection active
 ---
@@ -170,7 +170,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="handled"}
+  expression: sum(nginx_connections{state="handled"})
   legendFormat: Handled connections
   description: ingresscontroller nginx connection handled
 ---
@@ -186,7 +186,7 @@ metadata:
     level: cluster
     source: rancher-monitoring
 spec:
-  expression: nginx_connections{state="handled"}
+  expression: sum(nginx_connections{state="handled"}) by (instance)
   legendFormat: Handled connections
   description: ingresscontroller nginx connection handled
 ---
@@ -203,7 +203,7 @@ metadata:
     source: rancher-monitoring
 spec:
   expression: sort_desc(max(upstream_response_time_seconds_sum) by (host, path))
-  legendFormat: Upstream response seconds
+  legendFormat: Upstream response seconds(host:[[host]] path:[[path]])
   description: ingresscontroller nginx upstream response seconds by host
 ---
 kind: MonitorMetric
@@ -219,7 +219,7 @@ metadata:
     source: rancher-monitoring
 spec:
   expression: sort_desc(max(upstream_response_time_seconds_sum) by (host, path))
-  legendFormat: Upstream response seconds
+  legendFormat: Upstream response seconds(host:[[host]] path:[[path]])
   description: ingresscontroller nginx upstream response seconds by host
 ---
 kind: MonitorMetric
@@ -235,7 +235,7 @@ metadata:
     source: rancher-monitoring
 spec:
   expression: max(request_duration_seconds_bucket{le="1"}) by (host, path)
-  legendFormat: Request duration([[host]]:[[path]])
+  legendFormat: Request duration(host:[[host]] path:[[path]])
   description: ingresscontroller nginx request duration by path
 ---
 kind: MonitorMetric
@@ -250,7 +250,7 @@ metadata:
     metric: request-process-seconds
     source: rancher-monitoring
 spec:
-  expression: max(request_duration_seconds_bucket{le="1"}) 
-  legendFormat: Request duration([[host]]:[[path]])
+  expression: max(request_duration_seconds_bucket{le="1"}) by (host, path)
+  legendFormat: Request duration(host:[[host]] path:[[path]])
   description: ingresscontroller nginx request duration by path
 ---

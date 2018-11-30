@@ -231,7 +231,7 @@ metadata:
 spec:
   expression: sum(rate(node_network_receive_errs_total{device!~"lo|veth.*|docker.*|flannel.*|cali.*|cbr.*"}[5m]))
     
-  legendFormat: Receive error
+  legendFormat: Receive errors
   description: cluster network receive errors sum
 ---
 kind: MonitorMetric
@@ -249,7 +249,7 @@ metadata:
 spec:
   expression: sum(rate(node_network_receive_errs_total{device!~"lo|veth.*|docker.*|flannel.*|cali.*|cbr.*"}[5m]))
     by (instance)
-  legendFormat: Receive error([[instance]])
+  legendFormat: Receive errors([[instance]])
   description: cluster network receive errors sum
 ---
 kind: MonitorMetric
@@ -411,7 +411,7 @@ metadata:
 spec:
   expression: sum(rate(node_network_receive_drop_total{device!~"lo|veth.*|docker.*|flannel.*|cali.*|cbr.*"}[5m]))
     
-  legendFormat: Receive droppped
+  legendFormat: Receive dropped
   description: cluster network receive packets dropped sum
 ---
 kind: MonitorMetric
@@ -429,7 +429,7 @@ metadata:
 spec:
   expression: sum(rate(node_network_receive_drop_total{device!~"lo|veth.*|docker.*|flannel.*|cali.*|cbr.*"}[5m]))
     by (instance)
-  legendFormat: Receive droppped([[instance]])
+  legendFormat: Receive dropped([[instance]])
   description: cluster network receive packets dropped sum
 ---
 kind: MonitorMetric
@@ -447,7 +447,7 @@ metadata:
 spec:
   expression: sum(rate(node_network_transmit_drop_total{device!~"lo|veth.*|docker.*|flannel.*|cali.*|cbr.*"}[5m]))
     
-  legendFormat: Transmit drop
+  legendFormat: Transmit dropped
   description: cluster network transmit packets dropped sum
 ---
 kind: MonitorMetric
@@ -465,7 +465,7 @@ metadata:
 spec:
   expression: sum(rate(node_network_transmit_drop_total{device!~"lo|veth.*|docker.*|flannel.*|cali.*|cbr.*"}[5m]))
     by (instance)
-  legendFormat: Transmit drop([[instance]])
+  legendFormat: Transmit dropped([[instance]])
   description: cluster network transmit packets dropped sum
 ---
 kind: MonitorMetric

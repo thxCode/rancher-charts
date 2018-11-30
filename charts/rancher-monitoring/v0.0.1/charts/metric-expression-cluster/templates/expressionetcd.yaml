@@ -278,7 +278,7 @@ metadata:
     source: rancher-monitoring
 spec:
   expression: sum(increase(etcd_server_proposals_failed_total[5m])) 
-  legendFormat: Proposals failed"
+  legendFormat: Proposals failed
   description: etcd server proposals failed sum increase
 ---
 kind: MonitorMetric
@@ -312,7 +312,7 @@ metadata:
     source: rancher-monitoring
 spec:
   expression: sum(increase(etcd_server_proposals_pending[5m])) 
-  legendFormat: Proposals pending"
+  legendFormat: Proposals pending
   description: etcd server proposals pending sum increase
 ---
 kind: MonitorMetric
@@ -347,7 +347,7 @@ metadata:
 spec:
   expression: sum(histogram_quantile(0.99, rate(etcd_disk_wal_fsync_duration_seconds_bucket[5m])))
     
-  legendFormat: WAL fsync"
+  legendFormat: WAL fsync
   description: etcd disk wal fsync duration seconds sum quantile
 ---
 kind: MonitorMetric
@@ -630,7 +630,7 @@ metadata:
     source: rancher-monitoring
 spec:
   expression: sum(rate(etcd_server_proposals_failed_total[5m])) 
-  legendFormat: Proposal failure"
+  legendFormat: Proposal failure
   description: Proposal Failure Rate
 ---
 kind: MonitorMetric
@@ -662,7 +662,7 @@ metadata:
     source: rancher-monitoring
 spec:
   expression: sum(rate(grpc_server_started_total{grpc_type="unary"}[5m])) 
-  legendFormat: Rpc rate"
+  legendFormat: RPC rate
   description: rpc-rate
 ---
 kind: MonitorMetric

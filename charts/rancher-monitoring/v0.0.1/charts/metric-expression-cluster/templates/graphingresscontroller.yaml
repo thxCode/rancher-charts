@@ -75,4 +75,4 @@ spec:
     metric: upstream-response-seconds
   yAxis:
     unit: seconds
-  type: singlestat
+  graphType: singlestat

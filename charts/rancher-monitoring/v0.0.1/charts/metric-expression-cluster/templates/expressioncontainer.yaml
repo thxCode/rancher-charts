@@ -46,7 +46,7 @@ metadata:
 spec:
   expression: sum(rate(container_cpu_usage_seconds_total{namespace=~"$namespace",pod_name=~"$podName",
     container_name=~"$containerName"}[5m])) by (container_name)
-  legendFormat: CPU usage seconds
+  legendFormat: CPU usage
   description: container cpu usage seconds sum rate
 ---
 kind: MonitorMetric
@@ -63,7 +63,7 @@ metadata:
 spec:
   expression: sum(rate(container_cpu_usage_seconds_total{namespace=~"$namespace",pod_name=~"$podName",
     container_name=~"$containerName"}[5m])) by (container_name)
-  legendFormat: CPU usage seconds([[container_name]])
+  legendFormat: CPU usage([[container_name]])
   description: container cpu usage seconds sum rate
 ---
 kind: MonitorMetric

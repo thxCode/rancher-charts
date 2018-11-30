@@ -501,20 +501,20 @@ spec:
 kind: MonitorMetric
 apiVersion: management.cattle.io/v3
 metadata:
-  name: node-cpu-load-1
+  name: node-cpu-load-5
   labels:
     app: metric-expression
     component: node
     details: "false"
     graph: cpu-load
     level: cluster
-    metric: cpu-load-1
+    metric: cpu-load-5
     source: rancher-monitoring
 spec:
   expression: sum(node_load5{instance=~"$instance"})  / count(node_cpu_seconds_total{mode="system",instance=~"$instance"})
     
-  legendFormat: Load1
-  description: node cpu load 1
+  legendFormat: Load5
+  description: node cpu load 5
 ---
 kind: MonitorMetric
 apiVersion: management.cattle.io/v3
