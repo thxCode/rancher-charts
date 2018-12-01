@@ -101,7 +101,9 @@ spec:
 {{- if .Values.storageSpec }}
 {{ toYaml .Values.storageSpec | indent 8 }}
 {{- else }}
-        storageClassName: {{ default "default" .Values.persistence.storageClass }}
+        {{ if and .Values.persistence.storageClass (ne "default" .Values.persistence.storageClass) }}
+        storageClassName: {{ .Values.persistence.storageClass }}
+        {{ end }}
         accessModes: 
           - {{ default "ReadWriteOnce" .Values.persistence.accessMode }}
         resources:

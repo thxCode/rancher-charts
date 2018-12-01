@@ -14,7 +14,9 @@ spec:
   {{- else }}
   accessModes:
     - {{ default "ReadWriteOnce" .Values.persistence.accessMode }}
-  storageClassName: {{ default "default" .Values.persistence.storageClass }}
+  {{ if and .Values.persistence.storageClass (ne "default" .Values.persistence.storageClass) }}
+  storageClassName: {{ .Values.persistence.storageClass }}
+  {{ end }}
   resources:
     requests:
       storage: {{ .Values.persistence.size | quote }}
