@@ -78,7 +78,7 @@ image:
 
 ## Labels to be added to the Alertmanager
 ##
-labels: {}
+# labels: {}
 
 ## Node labels for Alertmanager pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/

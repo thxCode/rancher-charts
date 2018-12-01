@@ -14,13 +14,14 @@ spec:
 {{- if .Values.listenLocal }}
   listenLocal: true
 {{- end }}
-{{- if .Values.labels }}
   podMetadata:
     labels:
+{{- if .Values.labels }}
+{{ toYaml .Values.labels | indent 6 }}
+{{- else }}
       app: {{ template "app.name" . }}
       chart: {{ template "app.version" . }}
       release: {{ .Release.Name }}
-{{ toYaml .Values.labels | indent 6 }}
 {{- end }}
 {{- if .Values.alertingEndpoints }}
   alerting:

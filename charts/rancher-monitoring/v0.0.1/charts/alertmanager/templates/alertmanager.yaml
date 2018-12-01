@@ -11,13 +11,14 @@ metadata:
 {{- end }}
   name: {{ .Release.Name }}
 spec:
-{{- if .Values.labels }}
   podMetadata:
     labels:
+{{- if .Values.labels }}
+{{ toYaml .Values.labels | indent 6 }}
+{{- else }}
       app: {{ template "app.name" . }}
       chart: {{ template "app.version" . }}
       release: {{ .Release.Name }}
-{{ toYaml .Values.labels | indent 6 }}
 {{- end }}
   baseImage: "{{ .Values.image.repository }}"
 {{- if .Values.externalUrl }}

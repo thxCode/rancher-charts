@@ -49,7 +49,7 @@ image:
 
 ## Labels to be added to the Prometheus
 ##
-labels: {}
+# labels: {}
 
 ## Node labels for Prometheus pod assignment
 ## Ref: https://kubernetes.io/docs/user-guide/node-selection/
